@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class StarRenderer : MonoBehaviour
 {
-
 	public GameObject star;
 	private Star[] stars = new Star[2];
 	void Start()
 	{
-		for (int i = 0; i < stars.Length; i++)
-		{
-			Star s = Instantiate(star).GetComponent<Star>();
-			stars[i] = s;
+		Star s1 = Instantiate(star).GetComponent<Star>();
+		s1.movingRight = true;
+		s1.movingUp = true;
+		s1.speed = 4;
+		stars[0] = s1;
 
-		}
-	}
-	void Update()
-	{
-		Vector3 v1 = new Vector3();
-		Vector3 v2 = new Vector3();
-		v1.x = stars[0].transform.position.x + -0.1f * Time.deltaTime;
-		v2.x = stars[1].transform.position.x + 0.1f * Time.deltaTime;
-		stars[0].transform.position = v1;
-		stars[1].transform.position = v2;
+		Star s2 = Instantiate(star).GetComponent<Star>();
+		s2.movingRight = false;
+		s2.movingUp = false;
+		s2.speed = 6;
+		stars[0] = s2;
 	}
 }

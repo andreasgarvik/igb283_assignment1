@@ -278,5 +278,4 @@ public class Matrix3x3
 		}
 		return true;
 	}
-
 }
