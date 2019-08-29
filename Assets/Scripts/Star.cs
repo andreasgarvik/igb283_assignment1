@@ -60,6 +60,8 @@ public class Star : MonoBehaviour
 		Matrix3x3 translate;
 		Matrix3x3 scale;
 		Matrix3x3 rotate = IGB283Transform.Rotate(angle * Time.deltaTime);
+		//mesh.recalcutatebound()
+		//Venctor 3 m = mesh.bound.right
 
 		if (movingRight)
 		{
@@ -94,10 +96,12 @@ public class Star : MonoBehaviour
 
 		for (int i = 0; i < vertices.Length; i++)
 		{
-
-			vertices[i] = translate.MultiplyPoint(vertices[i]);
+			// M = TRS
+			//
+			// M = T-1RT
 			vertices[i] = scale.MultiplyPoint(vertices[i]);
-			//vertices[i] = rotate.MultiplyPoint(vertices[i]);
+			vertices[i] = rotate.MultiplyPoint(vertices[i]);
+			vertices[i] = translate.MultiplyPoint(vertices[i]);
 		}
 		mesh.vertices = vertices;
 		mesh.RecalculateBounds();

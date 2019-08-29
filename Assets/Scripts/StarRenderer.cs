@@ -18,6 +18,6 @@ public class StarRenderer : MonoBehaviour
 		s2.movingRight = false;
 		s2.movingUp = false;
 		s2.speed = 6;
-		stars[0] = s2;
+		stars[1] = s2;
 	}
 }
