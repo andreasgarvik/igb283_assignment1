@@ -5,25 +5,82 @@ using UnityEngine;
 public class Star : MonoBehaviour
 {
 	public Material material;
-	public float angle;
-	public float speed;
-	public bool movingRight;
-	public bool movingUp;
+	public float rotationSpeed;
+	public float translationSpeedX;
+	public float translationSpeedY;
+	public float scalingSpeed;
 
-
+	private float angle;
+	private float positionX;
+	private float positionY;
 	private Mesh mesh;
-	private float minX = -6.25f;
-	private float maxX = 6.25f;
-	private float minY = -4.75f;
-	private float maxY = 4.75f;
-	private float bigger = 1.005f;
-	private float smaller = 0.995f;
+	private float size = 1;
+	private bool bigger = true;
+	private bool smaller = false;
+	private float minX = -7f;
+	private float maxX = 7f;
+	private float minY = -3.75f;
+	private float maxY = 3.75f;
+	private float minSize = 0.600f;
+	private float maxSize = 1.400f;
 
 	void Start()
 	{
 		gameObject.AddComponent<MeshFilter>();
 		gameObject.AddComponent<MeshRenderer>();
 
+		resetMesh();
+	}
+	void Update()
+	{
+		float right = mesh.bounds.max.x;
+		float top = mesh.bounds.max.y;
+		float left = mesh.bounds.min.x;
+		float bottom = mesh.bounds.min.y;
+
+		resetMesh();
+
+		positionX = positionX >= maxX ? maxX : positionX;
+		positionY = positionY >= maxY ? maxY : positionY;
+
+
+		positionX = positionX <= minX ? minX : positionX;
+		positionY = positionY <= minY ? minY : positionY;
+
+		translationSpeedX = positionX < maxX && positionX > minX ? translationSpeedX : -translationSpeedX;
+		translationSpeedY = positionY < maxY && positionY > minY ? translationSpeedY : -translationSpeedY;
+
+		size = size >= maxSize ? maxSize : size;
+		size = size <= minSize ? minSize : size;
+
+		bigger = size < maxSize && !smaller;
+		smaller = size > minSize && !bigger;
+
+		size = bigger && !smaller ? size + scalingSpeed : size - scalingSpeed;
+
+		angle += Time.deltaTime * rotationSpeed;
+		positionX += Time.deltaTime * translationSpeedX;
+		positionY += Time.deltaTime * translationSpeedY;
+		size += Time.deltaTime * scalingSpeed;
+
+		Vector3[] vertices = mesh.vertices;
+		Matrix3x3 scale = IGB283Transform.Scale(size, size);
+		Matrix3x3 rotate = IGB283Transform.Rotate(angle);
+		Matrix3x3 translate = IGB283Transform.Translate(positionX, positionY);
+
+		//Matrix3x3 transformation = TRS 
+		for (int i = 0; i < vertices.Length; i++)
+		{
+			vertices[i] = scale.MultiplyPoint(vertices[i]);
+			vertices[i] = rotate.MultiplyPoint(vertices[i]);
+			vertices[i] = translate.MultiplyPoint(vertices[i]);
+		}
+		mesh.vertices = vertices;
+		mesh.RecalculateBounds();
+	}
+
+	void resetMesh()
+	{
 		mesh = GetComponent<MeshFilter>().mesh;
 
 		GetComponent<MeshRenderer>().material = material;
@@ -32,82 +89,27 @@ public class Star : MonoBehaviour
 
 		mesh.vertices = new Vector3[]
 		{
-						new Vector3(0, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0.5f, 0),
-						new Vector3(0,-1, 0), new Vector3(-0.5f, 0, 0), new Vector3(1, 0, 0),
-						new Vector3(0, -0.5f, 0), new Vector3(0, 1, 0), new Vector3(0.5f, 0, 0)
+							new Vector3(0, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0.5f, 0),
+							new Vector3(0,-1, 0), new Vector3(-0.5f, 0, 0), new Vector3(1, 0, 0),
+							new Vector3(0, -0.5f, 0), new Vector3(0, 1, 0), new Vector3(0.5f, 0, 0)
 		};
 
 		mesh.colors = new Color[]
 		{
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
-						new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(1.0f, 1.0f, 1.0f, 1.0f),
 		};
 
 		mesh.triangles = new int[] { 0, 1, 2, 0, 3, 4, 0, 5, 6, 0, 7, 8 };
-
-	}
-	void Update()
-	{
-
-		Vector3[] vertices = mesh.vertices;
-		Matrix3x3 translate;
-		Matrix3x3 scale;
-		Matrix3x3 rotate = IGB283Transform.Rotate(angle * Time.deltaTime);
-		//mesh.recalcutatebound()
-		//Venctor 3 m = mesh.bound.right
-
-		if (movingRight)
-		{
-			if (movingUp)
-			{
-				translate = IGB283Transform.Translate(speed * Time.deltaTime, speed * Time.deltaTime);
-				movingUp = vertices[7].y <= maxY;
-			}
-			else
-			{
-				translate = IGB283Transform.Translate(speed * Time.deltaTime, -speed * Time.deltaTime);
-				movingUp = vertices[3].y <= minY;
-			}
-			movingRight = vertices[5].x <= maxX;
-			scale = IGB283Transform.Scale(bigger, bigger);
-		}
-		else
-		{
-			if (movingUp)
-			{
-				translate = IGB283Transform.Translate(-speed * Time.deltaTime, speed * Time.deltaTime);
-				movingUp = vertices[7].y <= maxY;
-			}
-			else
-			{
-				translate = IGB283Transform.Translate(-speed * Time.deltaTime, -speed * Time.deltaTime);
-				movingUp = vertices[3].y <= minY;
-			}
-			movingRight = vertices[1].x <= minX;
-			scale = IGB283Transform.Scale(smaller, smaller);
-		}
-
-		for (int i = 0; i < vertices.Length; i++)
-		{
-			// M = TRS
-			//
-			// M = T-1RT
-			vertices[i] = scale.MultiplyPoint(vertices[i]);
-			vertices[i] = rotate.MultiplyPoint(vertices[i]);
-			vertices[i] = translate.MultiplyPoint(vertices[i]);
-		}
-		mesh.vertices = vertices;
-		mesh.RecalculateBounds();
-
-
-
 	}
 }
+
+
 

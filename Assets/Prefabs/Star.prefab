@@ -46,7 +46,6 @@ MonoBehaviour:
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   angle: 5
   speed: 5
-  bigger: 1.005
-  smaller: 0.995
+  rotationSpeed: 0
   movingRight: 1
   movingUp: 1

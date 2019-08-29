@@ -9,15 +9,17 @@ public class StarRenderer : MonoBehaviour
 	void Start()
 	{
 		Star s1 = Instantiate(star).GetComponent<Star>();
-		s1.movingRight = true;
-		s1.movingUp = true;
-		s1.speed = 4;
+		s1.translationSpeedX = 5;
+		s1.translationSpeedY = 7;
+		s1.rotationSpeed = 10f;
+		s1.scalingSpeed = 0.010f;
 		stars[0] = s1;
 
 		Star s2 = Instantiate(star).GetComponent<Star>();
-		s2.movingRight = false;
-		s2.movingUp = false;
-		s2.speed = 6;
+		s2.translationSpeedX = 8;
+		s2.translationSpeedY = 10;
+		s2.rotationSpeed = 7f;
+		s2.scalingSpeed = 0.010f;
 		stars[1] = s2;
 	}
 }
