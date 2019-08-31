@@ -9,6 +9,10 @@ public class Star : MonoBehaviour
 	public float translationSpeedX;
 	public float translationSpeedY;
 	public float scalingSpeed;
+	public float minX;
+	public float maxX;
+	public float minY;
+	public float maxY;
 
 	private float angle;
 	private float positionX;
@@ -17,10 +21,6 @@ public class Star : MonoBehaviour
 	private float size = 1;
 	private bool bigger = true;
 	private bool smaller = false;
-	private float minX = -7f;
-	private float maxX = 7f;
-	private float minY = -3.75f;
-	private float maxY = 3.75f;
 	private float minSize = 0.600f;
 	private float maxSize = 1.400f;
 
@@ -69,11 +69,11 @@ public class Star : MonoBehaviour
 		Matrix3x3 translate = IGB283Transform.Translate(positionX, positionY);
 
 		//Matrix3x3 transformation = TRS 
+		Matrix3x3 transformation = translate * rotate * scale;
+
 		for (int i = 0; i < vertices.Length; i++)
 		{
-			vertices[i] = scale.MultiplyPoint(vertices[i]);
-			vertices[i] = rotate.MultiplyPoint(vertices[i]);
-			vertices[i] = translate.MultiplyPoint(vertices[i]);
+			vertices[i] = transformation.MultiplyPoint(vertices[i]);
 		}
 		mesh.vertices = vertices;
 		mesh.RecalculateBounds();
