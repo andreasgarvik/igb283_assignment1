@@ -23,13 +23,16 @@ public class Star : MonoBehaviour
 	private bool smaller = false;
 	private float minSize = 0.600f;
 	private float maxSize = 1.400f;
+	private float r = 1.0f;
+	private float g = 1.0f;
+	private float b = 1.0f;
 
 	void Start()
 	{
 		gameObject.AddComponent<MeshFilter>();
 		gameObject.AddComponent<MeshRenderer>();
 
-		resetMesh();
+		resetMesh(r, g, b);
 	}
 	void Update()
 	{
@@ -38,14 +41,17 @@ public class Star : MonoBehaviour
 		float left = mesh.bounds.min.x;
 		float bottom = mesh.bounds.min.y;
 
-		resetMesh();
-
 		positionX = positionX >= maxX ? maxX : positionX;
 		positionY = positionY >= maxY ? maxY : positionY;
 
-
 		positionX = positionX <= minX ? minX : positionX;
 		positionY = positionY <= minY ? minY : positionY;
+
+		r = positionX > 0 ? 1.0f : 0;
+		g = positionY > 0 ? 1.0f : 0;
+		b = positionX < 0 ? 1.0f : 0;
+
+		resetMesh(r, g, b);
 
 		translationSpeedX = positionX < maxX && positionX > minX ? translationSpeedX : -translationSpeedX;
 		translationSpeedY = positionY < maxY && positionY > minY ? translationSpeedY : -translationSpeedY;
@@ -79,7 +85,7 @@ public class Star : MonoBehaviour
 		mesh.RecalculateBounds();
 	}
 
-	void resetMesh()
+	void resetMesh(float r, float g, float b)
 	{
 		mesh = GetComponent<MeshFilter>().mesh;
 
@@ -96,15 +102,15 @@ public class Star : MonoBehaviour
 
 		mesh.colors = new Color[]
 		{
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
-							new Color(1.0f, 1.0f, 1.0f, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
+							new Color(r, g, b, 1.0f),
 		};
 
 		mesh.triangles = new int[] { 0, 1, 2, 0, 3, 4, 0, 5, 6, 0, 7, 8 };

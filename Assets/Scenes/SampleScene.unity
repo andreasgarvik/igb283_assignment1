@@ -213,7 +213,7 @@ PrefabInstance:
     - target: {fileID: 8246340136706489554, guid: a8c8fa728efe2f74090cdfeacbf79926,
         type: 3}
       propertyPath: m_Name
-      value: StarRenderer
+      value: RenderAll
       objectReference: {fileID: 0}
     - target: {fileID: 8246340136706489555, guid: a8c8fa728efe2f74090cdfeacbf79926,
         type: 3}
