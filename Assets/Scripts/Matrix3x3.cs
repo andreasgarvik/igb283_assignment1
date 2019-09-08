@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Matrix3x3
+public class Matrix3x3 : MonoBehaviour
 {
 	private const int matrixOrder = 3;
 
