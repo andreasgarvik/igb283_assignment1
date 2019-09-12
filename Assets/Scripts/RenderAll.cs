@@ -62,41 +62,9 @@ public class RenderAll : MonoBehaviour
 
 	void Update()
 	{
-
-	}
-
-	void Move(Square square)
-	{
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		if (square.moving)
+		for (int i = 0; i < squares.Length; i++)
 		{
-			mousePosition.x -= square.x;
-			mousePosition.y -= square.y;
-			square.transform.position = mousePosition;
-			square.renderSquare();
+			// setting the bounds of the squares
 		}
 	}
-
-	void MouseClickAction(Square square)
-	{
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		square.shouldMove = (square.x - 0.5f < mousePosition.x && mousePosition.x < square.x + 0.5f)
-		&& (square.y - 0.5f < mousePosition.y && mousePosition.y < square.y + 0.5f);
-
-		if (Input.GetMouseButtonDown(0))
-		{
-			if (square.shouldMove)
-			{
-				square.moving = true;
-			}
-
-		}
-		else if (Input.GetMouseButtonUp(0))
-		{
-			square.moving = false;
-			square.x = mousePosition.x;
-			square.y = mousePosition.y;
-		}
-	}
-
 }
