@@ -62,11 +62,7 @@ public class RenderAll : MonoBehaviour
 
 	void Update()
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			MouseClickAction(squares[i]);
-			Move(squares[i]);
-		}
+
 	}
 
 	void Move(Square square)

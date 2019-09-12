@@ -9,7 +9,6 @@ public class Square : MonoBehaviour
 	public float y;
 	public bool moving = false;
 	public bool shouldMove = false;
-
 	private Mesh mesh;
 	void Start()
 	{
@@ -54,5 +53,21 @@ public class Square : MonoBehaviour
 		}
 		mesh.vertices = vertices;
 		mesh.RecalculateBounds();
+	}
+
+	void Update()
+	{
+
+	}
+	void Move()
+	{
+		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		if (moving)
+		{
+			mousePosition.x -= x;
+			mousePosition.y -= y;
+			//square.transform.position = mousePosition;
+			//square.renderSquare();
+		}
 	}
 }
