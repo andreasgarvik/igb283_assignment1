@@ -18,9 +18,11 @@ public class AudioScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     if (Input.GetKeyDown(KeyCode.Space)) {
+     if (Input.GetKeyDown(KeyCode.UpArrow)) {
          MusicSource.Play();
-     }   
+     }   else if (Input.GetKeyDown(KeyCode.DownArrow)){
+         MusicSource.Stop();
+     }
         
     }
 }
