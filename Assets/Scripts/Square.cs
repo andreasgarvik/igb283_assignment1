@@ -43,10 +43,10 @@ public class Square : MonoBehaviour
 		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		if (moving)
 		{
+			resetMesh();
+
 			x = mousePosition.x;
 			y = mousePosition.y;
-
-			resetMesh();
 
 			Vector3[] vertices = mesh.vertices;
 			Matrix3x3 translate = IGB283Transform.Translate(mousePosition.x, mousePosition.y);
