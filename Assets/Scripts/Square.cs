@@ -43,6 +43,9 @@ public class Square : MonoBehaviour
 		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		if (moving)
 		{
+			x = mousePosition.x;
+			y = mousePosition.y;
+
 			resetMesh();
 
 			Vector3[] vertices = mesh.vertices;
@@ -72,8 +75,6 @@ public class Square : MonoBehaviour
 		else if (Input.GetMouseButtonUp(0))
 		{
 			moving = false;
-			x = mousePosition.x;
-			y = mousePosition.y;
 		}
 	}
 

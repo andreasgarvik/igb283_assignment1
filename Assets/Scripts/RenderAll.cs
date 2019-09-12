@@ -62,9 +62,17 @@ public class RenderAll : MonoBehaviour
 
 	void Update()
 	{
-		for (int i = 0; i < squares.Length; i++)
+		for (int i = 0; i < stars.Length; i++)
 		{
-			// setting the bounds of the squares
+			float newMinX = Mathf.Min(squares[0].x, squares[1].x, squares[2].x, squares[3].x);
+			float newMaxX = Mathf.Max(squares[0].x, squares[1].x, squares[2].x, squares[3].x);
+			float newMinY = Mathf.Min(squares[0].y, squares[1].y, squares[2].y, squares[3].y);
+			float newMaxY = Mathf.Max(squares[0].y, squares[1].y, squares[2].y, squares[3].y);
+
+			stars[i].minX = newMinX;
+			stars[i].maxX = newMaxX;
+			stars[i].minY = newMinY;
+			stars[i].maxY = newMaxY;
 		}
 	}
 }
