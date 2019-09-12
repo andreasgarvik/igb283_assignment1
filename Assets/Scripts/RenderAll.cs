@@ -62,45 +62,17 @@ public class RenderAll : MonoBehaviour
 
 	void Update()
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < stars.Length; i++)
 		{
-			MouseClickAction(squares[i]);
-			Move(squares[i]);
+			float newMinX = Mathf.Min(squares[0].x, squares[1].x, squares[2].x, squares[3].x);
+			float newMaxX = Mathf.Max(squares[0].x, squares[1].x, squares[2].x, squares[3].x);
+			float newMinY = Mathf.Min(squares[0].y, squares[1].y, squares[2].y, squares[3].y);
+			float newMaxY = Mathf.Max(squares[0].y, squares[1].y, squares[2].y, squares[3].y);
+
+			stars[i].minX = newMinX;
+			stars[i].maxX = newMaxX;
+			stars[i].minY = newMinY;
+			stars[i].maxY = newMaxY;
 		}
 	}
-
-	void Move(Square square)
-	{
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		if (square.moving)
-		{
-			mousePosition.x -= square.x;
-			mousePosition.y -= square.y;
-			square.transform.position = mousePosition;
-			square.renderSquare();
-		}
-	}
-
-	void MouseClickAction(Square square)
-	{
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		square.shouldMove = (square.x - 0.5f < mousePosition.x && mousePosition.x < square.x + 0.5f)
-		&& (square.y - 0.5f < mousePosition.y && mousePosition.y < square.y + 0.5f);
-
-		if (Input.GetMouseButtonDown(0))
-		{
-			if (square.shouldMove)
-			{
-				square.moving = true;
-			}
-
-		}
-		else if (Input.GetMouseButtonUp(0))
-		{
-			square.moving = false;
-			square.x = mousePosition.x;
-			square.y = mousePosition.y;
-		}
-	}
-
 }

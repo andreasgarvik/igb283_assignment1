@@ -36,11 +36,6 @@ public class Star : MonoBehaviour
 	}
 	void Update()
 	{
-		float right = mesh.bounds.max.x;
-		float top = mesh.bounds.max.y;
-		float left = mesh.bounds.min.x;
-		float bottom = mesh.bounds.min.y;
-
 		positionX = positionX >= maxX ? maxX : positionX;
 		positionY = positionY >= maxY ? maxY : positionY;
 
