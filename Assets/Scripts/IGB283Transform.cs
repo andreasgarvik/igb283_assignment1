@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-public class IGB283Transform
+
+public class IGB283Transform 
 {
 	public static Matrix3x3 Rotate(float angle)
 	{
